@@ -1,12 +1,36 @@
+import { Navigate, Route, Routes } from "react-router-dom"
 import SignIn from "./pages/SignIn"
-import SignUp from "./pages/SignUp"
+import Todo from "./pages/todoScreen/Todo"
+import Signup from "./pages/SignUp"
+import { useEffect, useState } from "react";
 
 function App() {
 
+  const [userID, setUserID] = useState(localStorage.getItem("authUserID"));
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setUserID(localStorage.getItem("authUserID"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [userID]);
+  
   return (
     <>
-     <SignUp />
-     <SignIn />
+
+    <Routes>
+     
+        <Route path="/" element={userID ? (<Todo />) : (<Navigate to='/login' replace />)} />
+  
+      <Route path="/login" element={userID ? (<Navigate to='/' replace />) :(<SignIn setUserID={setUserID} />)} />
+      <Route path="/signup" element={userID ? (<Navigate to='/' replace />) :(<Signup />)} />
+    </Routes>
+
     </>
   )
 }
