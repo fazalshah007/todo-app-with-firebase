@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react'
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
@@ -107,5 +106,4 @@ const Login = ({ setUserID }) => {
 }
 
 export default Login
-=======
->>>>>>> 1339425 (reset boiler palets)
+
