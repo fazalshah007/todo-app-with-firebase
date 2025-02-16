@@ -17,7 +17,9 @@ const Login = ({ setUserID }) => {
       // Signed up 
       const user = userCredential.user;
       localStorage.setItem("authUserID",`${user.uid}`)
-      // console.log(user,user.uid);
+      localStorage.setItem("userData",JSON.stringify({
+        user:user.email
+      }))
       setUserID(user.uid);
       navigate("/",{ replace: true })  
       // ...
