@@ -1,23 +1,49 @@
 import React, { useState } from 'react'
-import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../firebaseConfig'
+import { auth, db } from '../firebaseConfig'
+import { doc, setDoc } from "firebase/firestore";
+import { toast } from 'react-toastify';
 
 const Login = ({ setUserID }) => {
+
 
   const navigate = useNavigate()
 
    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [role, setRole] = useState('')
+
+    if(!email || !password || !role){
+      toast('All feilds are required.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
 
     const logInUserWithEmailAndPassword = () => {
       signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then( async(userCredential) => {
       // Signed up 
       const user = userCredential.user;
-      localStorage.setItem("authUserID",`${user.uid}`)
+      const data = {
+        email,
+        role,
+      }
+      localStorage.setItem("signInUserData",JSON.stringify(data))
+      localStorage.setItem("authUserIdWithFirebase",`${user.uid}`)
       // console.log(user,user.uid);
+      await setDoc(doc(db, role, user.uid),{
+        email: email,
+        role: role
+      })
       setUserID(user.uid);
       navigate("/",{ replace: true })  
       // ...
@@ -25,6 +51,17 @@ const Login = ({ setUserID }) => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+
+      toast('Invalid Email Or Password!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     
       console.log(errorMessage);
       
@@ -74,7 +111,21 @@ const Login = ({ setUserID }) => {
         {/* button  */}
         <div className='mt-2 ml-8 text-start'>
 
-        <FormControlLabel control={<Checkbox />} label="Remember Me" />
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-standard-label">Role</InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={role}
+          onChange={e=>setRole(e.target.value)}
+          label="Age"
+        >
+        
+          <MenuItem value='user'>User</MenuItem>
+          <MenuItem value='admin'>Admin</MenuItem>
+          
+        </Select>
+      </FormControl>
         
         </div>
         <div className='mt-8'>
