@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Loader from '../../components/Loader'
+import { Outlet } from 'react-router-dom'
 
 const Dashboard = () => {
+
+  const [isLoading, setIsLoading] = useState(false)
+
   return (
-    <div>Dashboard</div>
+    <>
+     {
+     isLoading ? (<Loader />) : (
+      <>
+      dashboard
+      <Outlet />
+      </>
+     )
+    }
+    </>
   )
 }
 

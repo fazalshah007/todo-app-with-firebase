@@ -14,6 +14,21 @@ const Signup = () => {
 
 
   const signUpUserWithEmailAndPassword = () => {
+
+    if(!username || !email || !password || !role){
+            toast('All feilds are required.', {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+              return;
+          }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up 

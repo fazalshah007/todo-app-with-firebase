@@ -6,7 +6,7 @@ import { auth, db } from '../firebaseConfig'
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from 'react-toastify';
 
-const Login = ({ setUserID }) => {
+const Login = ({ setUserID, setUserData }) => {
 
 
   const navigate = useNavigate()
@@ -15,24 +15,30 @@ const Login = ({ setUserID }) => {
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('')
 
-    if(!email || !password || !role){
-      toast('All feilds are required.', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
-    }
+  
 
     const logInUserWithEmailAndPassword = () => {
+
+      if(!email || !password || !role){
+        toast('All feilds are required.', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+          return;
+      }
+
+
       signInWithEmailAndPassword(auth, email, password)
     .then( async(userCredential) => {
       // Signed up 
       const user = userCredential.user;
+
       const data = {
         email,
         role,
@@ -45,7 +51,8 @@ const Login = ({ setUserID }) => {
         role: role
       })
       setUserID(user.uid);
-      navigate("/",{ replace: true })  
+      setUserData(data)
+      navigate(role === "admin" ? "/admin" : "/",{ replace: true })  
       // ...
     })
     .catch((error) => {
