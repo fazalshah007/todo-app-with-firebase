@@ -47,7 +47,7 @@ function App() {
         <Route path="/" element={userID && userData?.role === "user" ? (<Home />) : (<Navigate to='/login' replace />)} />
 
         {/* admin routes  */}
-        <Route path="/admin" element={userID && userData?.role === "admin" ? (<Dashboard />) : (<Navigate to='/login' replace />)} >
+        <Route path="/admin" element={userID && userData?.role === "admin" ? (<Dashboard setUserID={setUserID} />) : (<Navigate to='/login' replace />)} >
           <Route path="products" element={ <Products /> } />
         </Route>
 

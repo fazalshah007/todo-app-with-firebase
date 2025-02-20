@@ -11,7 +11,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Collapse } from "@mui/material";
 import { Outlet } from 'react-router-dom'
 
-const Dashboard = () => {
+const Dashboard = ({ setUserID }) => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -23,6 +23,7 @@ const Dashboard = () => {
 
   const signOut = () => {
     localStorage.clear()
+    setUserID(null)
   }
 
   return (
@@ -109,12 +110,13 @@ const Dashboard = () => {
         </div>
 
         {/* Core Content */}
-        <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="p-4 grid place-items-center h-screen">
      
-          <div className='p-6 shadow-lg'>Box 1</div>
-          <div className='p-6 shadow-lg'>Box 1</div>
-          <div className='p-6 shadow-lg'>Box 1</div>
-          <div className='p-6 shadow-lg'>Box 1</div>
+          <div className='h-full w-full'>
+ 
+          <Loader />
+
+          </div>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ const Loader = () => {
     return (
 
         <>
-            <div className="w-screen h-screen grid place-items-center">
+            <div className="w-full h-full grid place-items-center">
                <div>
                <ScaleLoader
                     color={"#00008B"}
