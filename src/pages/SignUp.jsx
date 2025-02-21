@@ -70,10 +70,8 @@ const Signup = () => {
                 <TextField
                 onChange={e=>setUsername(e.target.value)}
                   className='w-2xs inline-block'
-                  id="standard-password-input"
                   label="username"
                   type="email"
-                  //   autoComplete="current-password"
                   variant="standard"
                 />
               </div>
@@ -84,10 +82,8 @@ const Signup = () => {
                     setEmail(e.target.value)
                   }}
                   className='w-2xs inline-block '
-                  id="standard-password-input"
                   label="email"
                   type="email"
-                  //   autoComplete="current-password"
                   variant="standard"
                 />
               </div>

@@ -9,9 +9,11 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import { Collapse } from "@mui/material";
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 const Dashboard = ({ setUserID }) => {
+
+  const location = useLocation()
 
   const [isLoading, setIsLoading] = useState(false)
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -113,8 +115,22 @@ const Dashboard = ({ setUserID }) => {
         <div className="p-4 grid place-items-center h-screen">
      
           <div className='h-full w-full'>
+
+            {
+              location.pathname === "/admin" ? (
+
+                // dashboard admin home page code here ...
+                <Loader />
+
+              ) : (
+
+                // nested routing all component will be rendered here ...
+                
+                <Outlet />
+              )
+            }
  
-          <Loader />
+         
 
           </div>
         </div>

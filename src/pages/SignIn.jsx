@@ -93,10 +93,8 @@ const Login = ({ setUserID, setUserData }) => {
         setEmail(e.target.value)
       }}
        className='w-2xs inline-block '
-          id="standard-password-input"
           label="email"
           type="email"
-        //   autoComplete="current-password"
           variant="standard"
         />
       </div>
@@ -107,10 +105,8 @@ const Login = ({ setUserID, setUserData }) => {
             setPassword(e.target.value)
           }}
        className='w-2xs inline-block'
-          id="standard-password-input"
           label="password"
           type="password"
-        //   autoComplete="current-password"
           variant="standard"
         />
         </div>
